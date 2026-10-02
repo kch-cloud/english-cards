@@ -90,6 +90,101 @@
      "exKo": ""
     }
    ]
+  },
+  {
+   "name": "Lesson 2 · This is my friend.",
+   "items": [
+    {
+     "en": "family",
+     "ko": "가족",
+     "ex": "I love my family.",
+     "exKo": "나는 우리 가족을 사랑해요."
+    },
+    {
+     "en": "father",
+     "ko": "아버지",
+     "ex": "This is my father.",
+     "exKo": "이분은 나의 아버지셔."
+    },
+    {
+     "en": "mother",
+     "ko": "어머니",
+     "ex": "This is my mother.",
+     "exKo": "이분은 나의 어머니셔."
+    },
+    {
+     "en": "grandfather",
+     "ko": "할아버지",
+     "ex": "This is my grandfather.",
+     "exKo": "이분은 나의 할아버지셔."
+    },
+    {
+     "en": "grandmother",
+     "ko": "할머니",
+     "ex": "This is my grandmother.",
+     "exKo": "이분은 나의 할머니셔."
+    },
+    {
+     "en": "teacher",
+     "ko": "선생님",
+     "ex": "She is my teacher.",
+     "exKo": "그녀는 나의 선생님이다."
+    },
+    {
+     "en": "friend",
+     "ko": "친구",
+     "ex": "This is my friend.",
+     "exKo": "이 아이는 내 친구야."
+    },
+    {
+     "en": "name",
+     "ko": "이름",
+     "ex": "What's your name?",
+     "exKo": "네 이름이 뭐니?"
+    },
+    {
+     "en": "meet",
+     "ko": "만나다",
+     "ex": "Nice to meet you.",
+     "exKo": "만나서 반가워."
+    },
+    {
+     "en": "bread",
+     "ko": "빵",
+     "ex": "I like bread.",
+     "exKo": "나는 빵을 좋아해요."
+    },
+    {
+     "en": "This is my brother.",
+     "ko": "이 아이는 내 남동생이야.",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "This is my sister.",
+     "ko": "이 아이는 내 여동생이야.",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "Nice to meet you.",
+     "ko": "만나서 반가워.",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "What's your name?",
+     "ko": "네 이름이 뭐니?",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "My name is Sara.",
+     "ko": "제 이름은 사라예요.",
+     "ex": "",
+     "exKo": ""
+    }
+   ]
   }
  ]
 }
