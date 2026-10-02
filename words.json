@@ -1,120 +1,91 @@
 {
- "title": "2학년 영어 단어장",
- "sample": true,
+ "title": "4학년 영어 단어장",
+ "sample": false,
  "sets": [
   {
-   "name": "Lesson 3 · My Weekend",
+   "name": "Lesson 1 · How are you?",
    "items": [
     {
-     "en": "weekend",
-     "ko": "주말",
-     "ex": "I usually play soccer on the weekend.",
-     "exKo": "나는 주말에 보통 축구를 한다."
+     "en": "morning",
+     "ko": "아침",
+     "ex": "Good morning.",
+     "exKo": "좋은 아침이야."
     },
     {
-     "en": "visit",
-     "ko": "방문하다",
-     "ex": "We visited my grandmother last Sunday.",
-     "exKo": "우리는 지난 일요일에 할머니 댁을 방문했다."
+     "en": "afternoon",
+     "ko": "오후",
+     "ex": "Good afternoon.",
+     "exKo": "좋은 오후야."
     },
     {
-     "en": "museum",
-     "ko": "박물관",
-     "ex": "The museum opens at nine.",
-     "exKo": "그 박물관은 9시에 문을 연다."
+     "en": "evening",
+     "ko": "저녁",
+     "ex": "Good evening.",
+     "exKo": "좋은 저녁이야."
     },
     {
-     "en": "delicious",
-     "ko": "맛있는",
-     "ex": "The kimbap was really delicious.",
-     "exKo": "그 김밥은 정말 맛있었다."
+     "en": "spaghetti",
+     "ko": "스파게티",
+     "ex": "I like spaghetti.",
+     "exKo": "나는 스파게티를 좋아해."
     },
     {
-     "en": "practice",
-     "ko": "연습하다",
-     "ex": "She practices the piano every day.",
-     "exKo": "그녀는 매일 피아노를 연습한다."
+     "en": "so",
+     "ko": "그렇게, 너무",
+     "ex": "Not so good.",
+     "exKo": "그렇게 좋지는 않아."
     },
     {
-     "en": "exciting",
-     "ko": "신나는, 흥미진진한",
-     "ex": "The baseball game was exciting.",
-     "exKo": "그 야구 경기는 신났다."
+     "en": "bad",
+     "ko": "나쁜",
+     "ex": "Not bad.",
+     "exKo": "나쁘지 않아."
     },
     {
-     "en": "tired",
-     "ko": "피곤한",
-     "ex": "I was tired after the long hike.",
-     "exKo": "나는 긴 등산 후에 피곤했다."
+     "en": "great",
+     "ko": "아주 좋은",
+     "ex": "I'm great.",
+     "exKo": "아주 좋아."
     },
     {
-     "en": "borrow",
-     "ko": "빌리다",
-     "ex": "Can I borrow your pencil?",
-     "exKo": "네 연필 좀 빌려도 될까?"
+     "en": "pretty",
+     "ko": "예쁜",
+     "ex": "She is pretty.",
+     "exKo": "그녀는 예뻐."
     },
     {
-     "en": "What did you do last weekend?",
-     "ko": "지난 주말에 뭐 했어?",
+     "en": "Good morning.",
+     "ko": "좋은 아침이야.",
      "ex": "",
      "exKo": ""
     },
     {
-     "en": "I went camping with my family.",
-     "ko": "나는 가족과 캠핑을 갔어.",
-     "ex": "",
-     "exKo": ""
-    }
-   ]
-  },
-  {
-   "name": "Lesson 4 · Seasons",
-   "items": [
-    {
-     "en": "season",
-     "ko": "계절",
-     "ex": "Which season do you like best?",
-     "exKo": "너는 어느 계절을 가장 좋아하니?"
-    },
-    {
-     "en": "cloudy",
-     "ko": "흐린",
-     "ex": "It's cloudy and cool today.",
-     "exKo": "오늘은 흐리고 시원하다."
-    },
-    {
-     "en": "umbrella",
-     "ko": "우산",
-     "ex": "Don't forget your umbrella.",
-     "exKo": "우산 잊지 마."
-    },
-    {
-     "en": "warm",
-     "ko": "따뜻한",
-     "ex": "Spring is warm and sunny.",
-     "exKo": "봄은 따뜻하고 화창하다."
-    },
-    {
-     "en": "freezing",
-     "ko": "몹시 추운",
-     "ex": "It was freezing this morning.",
-     "exKo": "오늘 아침은 몹시 추웠다."
-    },
-    {
-     "en": "forecast",
-     "ko": "일기 예보",
-     "ex": "The forecast says it will rain.",
-     "exKo": "일기 예보에 따르면 비가 올 거래."
-    },
-    {
-     "en": "How's the weather today?",
-     "ko": "오늘 날씨 어때?",
+     "en": "How are you?",
+     "ko": "기분이 어때?",
      "ex": "",
      "exKo": ""
     },
     {
-     "en": "It's going to snow tomorrow.",
-     "ko": "내일 눈이 올 거야.",
+     "en": "I'm great.",
+     "ko": "아주 좋아.",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "I'm good.",
+     "ko": "좋아.",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "Not bad.",
+     "ko": "나쁘지 않아.",
+     "ex": "",
+     "exKo": ""
+    },
+    {
+     "en": "Not so good.",
+     "ko": "그렇게 좋지는 않아.",
      "ex": "",
      "exKo": ""
     }
