@@ -491,7 +491,7 @@ function renderSettings(){
     '<div class="field"><label for="cfg-repo">GitHub 저장소 <span class="muted">(아이디/저장소이름)</span></label><input id="cfg-repo" value="'+esc(CFG.repo)+'" placeholder="myteacher/english-cards" spellcheck="false" autocapitalize="off"></div>'+
     '<div class="field"><label for="cfg-branch">브랜치</label><input id="cfg-branch" value="'+esc(CFG.branch)+'" spellcheck="false" autocapitalize="off"></div>'+
     '<div class="field"><label for="cfg-gh">GitHub 토큰</label><input id="cfg-gh" type="password" value="'+esc(CFG.gh)+'" placeholder="github_pat_…" autocomplete="off" spellcheck="false"></div>'+
-    '<div class="field"><label for="cfg-gem">Gemini API 키</label><input id="cfg-gem" type="password" value="'+esc(CFG.gem)+'" placeholder="AIza…" autocomplete="off" spellcheck="false"></div>'+
+    '<div class="field"><label for="cfg-gem">Gemini API 키</label><input id="cfg-gem" type="password" value="'+esc(CFG.gem)+'" placeholder="AQ.… 또는 AIza…" autocomplete="off" spellcheck="false"></div>'+
     '<div class="field"><label for="cfg-model">Gemini 모델</label><input id="cfg-model" value="'+esc(CFG.model)+'" spellcheck="false" autocapitalize="off"></div>'+
    '</div>'+
    '<div class="row"><button class="btn primary" data-act="cfg-save">설정 저장</button><button class="btn ghost" data-act="cfg-clear">열쇠 지우기</button><button class="link" data-act="teacher-off">이 기기에서 로그아웃</button></div>'+
@@ -554,16 +554,33 @@ function runImport(){
   var mime=f.type||(/\.pdf$/i.test(f.name)?"application/pdf":"");
   var opts={what:$("#imp-what").value,level:$("#imp-level").value,ex:$("#imp-ex").checked,place:$("#imp-place").value,name:f.name.replace(/\.[^.]+$/,"").slice(0,40)||"PDF 단어"};
   setBusy(true);IMP.ctl=new AbortController();var ctl=IMP.ctl;
-  var s=$("#imp-status");if(s){s.style.color="";s.innerHTML='Gemini가 단어와 문장을 정리하는 중… <span id="imp-elapsed">0초</span> <span class="muted">(보통 20초~1분 걸려요)</span>'}
-  fileToB64(f).then(function(b64){
-    return fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(CFG.model.trim())+":generateContent",{
+  var s=$("#imp-status");if(s){s.style.color="";s.innerHTML='Gemini가 단어와 문장을 정리하는 중… <span id="imp-elapsed">0초</span> <span class="muted">(보통 20초~1분 걸려요)</span><div class="muted" id="imp-note"></div>'}
+  /* a busy or missing model is common on the free tier: try the chosen model twice, then lighter ones */
+  var models=[CFG.model.trim(),"gemini-3.6-flash","gemini-3.5-flash","gemini-3.1-flash-lite"].filter(function(m,i,a){return m&&a.indexOf(m)===i});
+  var usedModel="";
+  function wait(ms){return new Promise(function(res,rej){var t=setTimeout(res,ms);ctl.signal.addEventListener("abort",function(){clearTimeout(t);rej({name:"AbortError"})})})}
+  function callModel(b64,model){
+    return fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(model)+":generateContent",{
       method:"POST",signal:ctl.signal,
       headers:{"Content-Type":"application/json","x-goog-api-key":CFG.gem.trim()},
       body:JSON.stringify({contents:[{role:"user",parts:[{inline_data:{mime_type:mime,data:b64}},{text:buildPrompt(opts)}]}],generationConfig:{response_mime_type:"application/json"}})
+    }).then(function(r){
+      return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw {http:r.status,msg:(j.error&&j.error.message)||"",model:model};usedModel=model;return j});
     });
-  }).then(function(r){
-    return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw {http:r.status,msg:(j.error&&j.error.message)||""};return j});
-  }).then(function(j){
+  }
+  function attempt(b64,mi,tryNo){
+    var model=models[mi];
+    return callModel(b64,model).catch(function(e){
+      var busy=e&&e.http&&(e.http>=500||e.http===429),missing=e&&e.http===404;
+      if(!busy&&!missing)throw e;
+      var note=$("#imp-note");
+      if(busy&&tryNo===0){if(note)note.textContent=model+" 모델이 바빠서 다시 해 보는 중…";return wait(4000).then(function(){return attempt(b64,mi,1)})}
+      if(mi+1<models.length){if(note)note.textContent=model+" 모델을 쓸 수 없어서 "+models[mi+1]+"(으)로 바꿔 보는 중…";return wait(1500).then(function(){return attempt(b64,mi+1,0)})}
+      throw e;
+    });
+  }
+  fileToB64(f).then(function(b64){return attempt(b64,0,0)})
+  .then(function(j){
     var c=j.candidates&&j.candidates[0];
     var txt=(c&&c.content&&c.content.parts||[]).map(function(p){return p.text||""}).join("").trim();
     if(!txt)throw {code:"empty"};
@@ -573,7 +590,7 @@ function runImport(){
     var ta=$("#deck-text"),add=setsToText(sets);
     var next=(opts.place==="append"&&ta.value.trim())?ta.value.replace(/\s+$/,"")+"\n\n"+add:add;
     ta.value=next;draft=next;updateParseInfo();
-    impStatus(n+"개 항목을 만들어서 아래 목록에 "+(opts.place==="append"?"추가":"채워")+"했어요. 뜻과 예문을 확인한 뒤 저장해 주세요.","var(--good)");
+    impStatus(n+"개 항목을 만들어서 아래 목록에 "+(opts.place==="append"?"추가":"채워")+"했어요. 뜻과 예문을 확인한 뒤 저장해 주세요."+(usedModel&&usedModel!==models[0]?" ("+usedModel+" 모델로 정리했어요.)":""),"var(--good)");
     ta.scrollIntoView({behavior:"smooth",block:"center"});
   }).catch(function(e){
     var msg;
@@ -582,10 +599,10 @@ function runImport(){
       var h=e.http,m=e.msg||"";
       if(h===400&&/api key/i.test(m))msg="Gemini API 키가 맞지 않아요. 연결 설정에서 키를 다시 확인해 주세요.";
       else if(h===403)msg="이 API 키로는 Gemini를 쓸 수 없어요. Google AI Studio에서 키를 새로 만들어 넣어 주세요.";
-      else if(h===404)msg="모델 이름을 찾을 수 없어요. 연결 설정의 Gemini 모델 이름을 확인해 주세요. (지금: "+CFG.model+")";
-      else if(h===429)msg="무료 사용량을 다 썼거나 요청이 너무 잦아요. 1분쯤 뒤, 또는 내일 다시 해 주세요.";
+      else if(h===404)msg="쓸 수 있는 Gemini 모델을 찾지 못했어요. 연결 설정의 Gemini 모델 이름을 확인해 주세요. (지금: "+CFG.model+")";
+      else if(h===429)msg="무료 사용량을 다 썼거나 요청이 너무 잦아요. 1분쯤 뒤, 또는 내일 다시 해 주세요."+(m?" (Gemini 안내: "+m.slice(0,200)+")":"");
       else if(h===413||/size|too large|exceeds/i.test(m))msg="파일이 너무 커요. 필요한 쪽만 따로 PDF로 만들어 올려 주세요.";
-      else if(h>=500)msg="Gemini 쪽에 잠깐 문제가 있어요. 잠시 후 다시 눌러 주세요.";
+      else if(h>=500)msg="Gemini 모델들이 지금 모두 바쁘거나 이 파일을 처리하지 못했어요 (응답 "+h+(m?": "+m.slice(0,200):"")+"). 몇 분 뒤 다시 누르거나, 쪽수가 적은 PDF로 나눠서 올려 보세요.";
       else msg="정리하지 못했어요 ("+h+(m?": "+m:"")+").";
     }
     else if(e&&e.code==="json")msg="정리 결과를 읽지 못했어요. 한 번 더 눌러 주세요.";
